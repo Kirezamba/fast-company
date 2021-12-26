@@ -73,4 +73,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 2. git add [files] - добавляет файлы в stage
 3. git commit -m "comment"
 4. git log / git log --oneline
-5. git push [rep link] [branch name]
+5. git push [rep_link] [branch_name]
+6. git checkout - switch branch
