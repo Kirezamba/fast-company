@@ -5,22 +5,25 @@ import Pagination from "./Pagination";
 import api from "../api";
 import GroupList from "./GroupList";
 import SearchStatus from "./SearchStatus";
-import UserTable from "./UsersTable";
+import UsersTable from "./UsersTable";
 import _ from "lodash";
-const Users = () => {
+
+const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfession] = useState();
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
   const pageSize = 4;
-
   const [users, setUsers] = useState();
+
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data));
   }, []);
+
   const handleDelete = (userId) => {
     setUsers(users.filter((user) => user._id !== userId));
   };
+
   const handleToggleBookMark = (id) => {
     const newArray = users.map((user) => {
       if (user._id === id) {
@@ -80,7 +83,7 @@ const Users = () => {
         <div className="d-flex flex-column">
           <SearchStatus length={count} />
           {count > 0 && (
-            <UserTable
+            <UsersTable
               users={usersCrop}
               onSort={handleSort}
               selectedSort={sortBy}
@@ -100,10 +103,10 @@ const Users = () => {
       </div>
     );
   }
-  return "loading...";
+  return <h1>Loading...</h1>;
 };
-Users.propTypes = {
+UsersList.propTypes = {
   users: PropTypes.array,
 };
 
-export default Users;
+export default UsersList;
