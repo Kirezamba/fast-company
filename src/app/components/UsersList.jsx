@@ -7,14 +7,21 @@ import GroupList from "./GroupList";
 import SearchStatus from "./SearchStatus";
 import UsersTable from "./UsersTable";
 import _ from "lodash";
+import TableInput from "./TableInput";
 
 const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfession] = useState();
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-  const pageSize = 4;
   const [users, setUsers] = useState();
+  const [searchQuery, setSearchQuery] = useState("");
+  const pageSize = 4;
+
+  const handleSearchQuery = (e) => {
+    setSelectedProf(undefined);
+    setSearchQuery(e.target.value);
+  };
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data));
@@ -40,10 +47,13 @@ const UsersList = () => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedProf]);
+  }, [selectedProf, searchQuery]);
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
+    if (searchQuery !== "") {
+      setSearchQuery("");
+    }
   };
 
   const handlePageChange = (pageIndex) => {
@@ -54,12 +64,15 @@ const UsersList = () => {
   };
 
   if (users) {
-    const filteredUsers = selectedProf
+    const filteredUsers = searchQuery
+      ? users.filter((user) => user.name.toUpperCase().indexOf(searchQuery.toUpperCase()) !== -1)
+      : selectedProf
       ? users.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf))
       : users;
 
     const count = filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
+
     const usersCrop = paginate(sortedUsers, currentPage, pageSize);
     const clearFilter = () => {
       setSelectedProf();
@@ -75,16 +88,19 @@ const UsersList = () => {
               onItemSelect={handleProfessionSelect}
             />
             <button className="btn btn-secondary mt-2" onClick={clearFilter}>
-              {" "}
               Очистить
             </button>
           </div>
         )}
         <div className="d-flex flex-column">
           <SearchStatus length={count} />
+          <TableInput inputValue={searchQuery} onChangeInput={handleSearchQuery} />
           {count > 0 && (
             <UsersTable
               users={usersCrop}
+              allUsers={users}
+              onChangeInput={handleSearchQuery}
+              inputValue={searchQuery}
               onSort={handleSort}
               selectedSort={sortBy}
               onDelete={handleDelete}

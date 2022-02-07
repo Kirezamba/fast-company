@@ -2,18 +2,18 @@ import React from "react";
 
 import { Redirect, Route, Switch } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import LoginPage from "./layouts/LoginPage";
-import MainPage from "./layouts/MainPage";
-import UsersPage from "./layouts/UsersPage";
+import Login from "./layouts/Login";
+import Main from "./layouts/Main";
+import Users from "./layouts/Users";
 
 function App() {
   return (
     <>
       <Navigation />
       <Switch>
-        <Route path="/users/:userId?" component={UsersPage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/" component={MainPage} />
+        <Route path="/users/:userId?" component={Users} />
+        <Route path="/login" component={Login} />
+        <Route path="/" component={Main} />
         <Redirect to="/" />
       </Switch>
     </>
