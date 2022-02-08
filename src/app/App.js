@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Redirect, Route, Switch } from "react-router-dom";
-import Navigation from "./components/Navigation";
+import Navigation from "./components/ui/Navigation";
 import Login from "./layouts/Login";
 import Main from "./layouts/Main";
 import Users from "./layouts/Users";
