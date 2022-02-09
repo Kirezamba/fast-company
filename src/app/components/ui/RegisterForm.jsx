@@ -4,15 +4,28 @@ import { validator } from "../../utils/validator";
 import TextField from "../common/form/TextField";
 import api from "../../api";
 import SelectField from "../common/form/SelectField";
+import RadioField from "../common/form/RadioField";
+import MultiSelectField from "../common/form/MultiSelectField";
+import CheckBoxField from "../common/form/CheckBoxField";
+
 export default function RegisterForm() {
-  const [data, setData] = useState({ email: "", password: "", profession: "" });
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    profession: "",
+    sex: "Male",
+    qualities: [],
+    license: false,
+  });
   const [errors, setErrors] = useState({});
   const [professions, setProfession] = useState();
+  const [qualities, setQualities] = useState({});
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfession(data));
+    api.qualities.fetchAll().then((data) => setQualities(data));
   }, []);
 
-  const handleChange = ({ target }) => {
+  const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
@@ -28,6 +41,9 @@ export default function RegisterForm() {
       min: { message: "Password must have at least 8 symbols", value: 8 },
     },
     profession: { isRequired: { message: "Require to choose your profession" } },
+    license: {
+      isRequired: { message: "You can not use our service without license confirmation" },
+    },
   };
 
   useEffect(() => {
@@ -70,10 +86,36 @@ export default function RegisterForm() {
           options={professions}
           defaultOption="Choose..."
           error={errors.profession}
+          name="profession"
           value={data.profession}
-          label="Choose your profession"
+          label="Choose your profession:"
         />
-
+        <RadioField
+          options={[
+            { name: "Male", value: "Male" },
+            { name: "Female", value: "Female" },
+            { name: "Other", value: "Other" },
+          ]}
+          value={data.sex}
+          name="sex"
+          label="Choose your sex:"
+          onChange={handleChange}
+        />
+        <MultiSelectField
+          options={qualities}
+          onChange={handleChange}
+          name="qualities"
+          defaultValue={data.qualities}
+          label="Choose your qualities:"
+        />
+        <CheckBoxField
+          value={data.license}
+          onChange={handleChange}
+          name="license"
+          error={errors.license}
+        >
+          <a role="button">Confirm the license agreement</a>
+        </CheckBoxField>
         <button type="submit" disabled={!isValid} className="btn btn-primary w-100 mx-auto">
           submit
         </button>

@@ -10,8 +10,8 @@ export default function UserPage({ id }) {
 
   useEffect(() => {
     api.users.getById(id).then((data) => setUser(data));
-  });
-  console.log(user);
+  }, []);
+
   const handleClick = () => {
     history.push("/users");
   };

@@ -1,14 +1,26 @@
-import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/validator";
+import CheckBoxField from "../common/form/CheckBoxField";
 import TextField from "../common/form/TextField";
+
 export default function LoginForm() {
-  const [data, setData] = useState({ email: "", password: "" });
+  const [data, setData] = useState({ email: "", password: "", stayOn: false });
   const [errors, setErrors] = useState({});
 
-  const handleChange = ({ target }) => {
+  const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
+
+  // const validateScheme = yup.object().shape({
+  //   password: yup
+  //     .string()
+  //     .required("Password is required")
+  //     .matches(/^(?=.*[A-Z])/, "Password must contain at least one capital symbol")
+  //     .matches(/(?=.*[0-9])/, "Password must contain at least one digit")
+  //     .matches(/(?=.*[@#$%^&*])/, "Password must contain at least one special symbol")
+  //     .matches(/(?=.{8,)/, "Password must have at least 8 symbols"),
+  //   email: yup.string().required("Email is required").email("Email is incorrect"),
+  // });
 
   const validatorConfig = {
     email: {
@@ -29,6 +41,10 @@ export default function LoginForm() {
 
   const validate = () => {
     const errors = validator(data, validatorConfig);
+    // validateScheme
+    //   .validate(data)
+    //   .then(() => setErrors({}))
+    //   .catch((err) => setErrors({ [err.path]: err.message }));
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -58,6 +74,9 @@ export default function LoginForm() {
           onChange={handleChange}
           error={errors.password}
         />
+        <CheckBoxField value={data.stayOn} onChange={handleChange} name="stayOn">
+          <a role="button">Stay online</a>
+        </CheckBoxField>
         <button type="submit" disabled={!isValid} className="btn btn-primary w-100 mx-auto">
           submit
         </button>
