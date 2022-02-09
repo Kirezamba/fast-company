@@ -13,20 +13,23 @@ export default function UserPage({ id }) {
   }, []);
 
   const handleClick = () => {
-    history.push("/users");
+    history.push(`/users/${id}/edit`);
   };
 
   if (user) {
     return (
-      <div>
-        <h1>Имя: {user.name}</h1>
-        <h2>Профессия: {user.profession.name}</h2>
+      <div style={{ marginLeft: "3rem" }}>
+        <h1>Name: {user.name}</h1>
+        <h2>Profession: {user.profession.name}</h2>
         <Qualities qualities={user.qualities} />
-        <p>Всего встреч: {user.completedMeetings}</p>
-        <p>Оценка: {user.rate}</p>
-        <button className="btn btn-primary" onClick={handleClick}>
-          Все пользователи
-        </button>
+        <p>Completed meetings: {user.completedMeetings}</p>
+        <p>Rate: {user.rate}</p>
+
+        <div className="mt-2">
+          <button className="btn btn-primary" onClick={handleClick}>
+            Change information
+          </button>
+        </div>
       </div>
     );
   } else {

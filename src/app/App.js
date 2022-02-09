@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Redirect, Route, Switch } from "react-router-dom";
 import Navigation from "./components/ui/Navigation";
 import Login from "./layouts/Login";
@@ -11,7 +10,7 @@ function App() {
     <>
       <Navigation />
       <Switch>
-        <Route path="/users/:userId?" component={Users} />
+        <Route path="/users/:userId?/:edit?" component={Users} />
         <Route path="/login/:type?" component={Login} />
         <Route path="/" component={Main} />
         <Redirect to="/" />
