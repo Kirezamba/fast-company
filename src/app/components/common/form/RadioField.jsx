@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default function RadioField({ options, label, name, onChange, value }) {
+const RadioField = ({ options, name, onChange, value, label }) => {
   const handleChange = ({ target }) => {
-    onChange({ name: [target.name], value: target.value });
+    onChange({ name: target.name, value: target.value });
   };
-
   return (
     <div className="mb-4">
       <label className="form-label">{label}</label>
@@ -14,14 +13,14 @@ export default function RadioField({ options, label, name, onChange, value }) {
           <div key={option.name + "_" + option.value} className="form-check form-check-inline">
             <input
               className="form-check-input"
+              type="radio"
               name={name}
-              type="checkbox"
               id={option.name + "_" + option.value}
-              value={option.value}
               checked={option.value === value}
+              value={option.value}
               onChange={handleChange}
             />
-            <label className="form-check-label" htmlFor="inlineCheckbox1">
+            <label className="form-check-label" htmlFor={option.name + "_" + option.value}>
               {option.name}
             </label>
           </div>
@@ -29,12 +28,14 @@ export default function RadioField({ options, label, name, onChange, value }) {
       </div>
     </div>
   );
-}
+};
 
 RadioField.propTypes = {
   options: PropTypes.array,
   name: PropTypes.string,
-  label: PropTypes.string,
   onChange: PropTypes.func,
   value: PropTypes.string,
+  label: PropTypes.string,
 };
+
+export default RadioField;

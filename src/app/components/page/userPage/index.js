@@ -1,3 +1,2 @@
-import UserPage from "./UserPage.jsx";
-
+import UserPage from "./UserPage";
 export default UserPage;

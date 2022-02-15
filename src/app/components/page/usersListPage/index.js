@@ -1,3 +1,2 @@
-import UsersListPage from "./UsersListPage.jsx";
-
+import UsersListPage from "./UsersListPage";
 export default UsersListPage;

@@ -1,11 +1,7 @@
 import React from "react";
 
-export default function Main() {
-  return (
-    <>
-      <li className="nav-item">
-        <h1>Main</h1>
-      </li>
-    </>
-  );
-}
+const Main = () => {
+    return <h1> Main Page</h1>;
+};
+
+export default Main;

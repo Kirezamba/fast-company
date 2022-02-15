@@ -9,7 +9,6 @@ const Table = ({ onSort, selectedSort, columns, data, children }) => {
       {children || (
         <>
           <TableHeader {...{ onSort, selectedSort, columns }} />
-
           <TableBody {...{ columns, data }} />
         </>
       )}

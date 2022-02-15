@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default function CheckBoxField({ name, value, onChange, children, error }) {
-  const handleChange = ({ target }) => {
+const CheckBoxField = ({ name, value, onChange, children, error }) => {
+  const handleChange = () => {
     onChange({ name: name, value: !value });
   };
   const getInputClasses = () => {
@@ -24,8 +24,7 @@ export default function CheckBoxField({ name, value, onChange, children, error }
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );
-}
-
+};
 CheckBoxField.propTypes = {
   name: PropTypes.string,
   value: PropTypes.bool,
@@ -33,3 +32,5 @@ CheckBoxField.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   error: PropTypes.string,
 };
+
+export default CheckBoxField;

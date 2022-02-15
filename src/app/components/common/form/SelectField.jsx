@@ -1,19 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default function SelectField({
-  label,
-  value,
-  name,
-  onChange,
-  defaultOption,
-  options,
-  error,
-}) {
+const SelectField = ({ label, value, onChange, defaultOption, options, error, name }) => {
   const handleChange = ({ target }) => {
-    onChange({ name: [target.name], value: target.value });
+    onChange({ name: target.name, value: target.value });
   };
-
   const getInputClasses = () => {
     return "form-select" + (error ? " is-invalid" : "");
   };
@@ -28,7 +19,7 @@ export default function SelectField({
 
   return (
     <div className="mb-4">
-      <label htmlFor="validationCustom04" className="form-label">
+      <label htmlFor={name} className="form-label">
         {label}
       </label>
       <select
@@ -43,7 +34,7 @@ export default function SelectField({
         </option>
         {optionsArray &&
           optionsArray.map((option) => (
-            <option key={option.value} value={option.value}>
+            <option value={option.value} key={option.value}>
               {option.name}
             </option>
           ))}
@@ -51,14 +42,16 @@ export default function SelectField({
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );
-}
+};
 
 SelectField.propTypes = {
   defaultOption: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.string,
-  error: PropTypes.string,
-  name: PropTypes.string,
-  options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onChange: PropTypes.func,
+  error: PropTypes.string,
+  options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  name: PropTypes.string,
 };
+
+export default SelectField;

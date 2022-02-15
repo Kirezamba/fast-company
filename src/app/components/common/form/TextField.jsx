@@ -1,22 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useState } from "react/cjs/react.development";
 
-export default function TextField({ label, type, name, value, onChange, error }) {
+const TextField = ({ label, type, name, value, onChange, error }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = ({ target }) => {
-    onChange({ name: [target.name], value: target.value });
+    onChange({ name: target.name, value: target.value });
   };
-
-  const toggleShowPassword = () => {
-    setShowPassword((prevState) => !prevState);
-  };
-
   const getInputClasses = () => {
     return "form-control" + (error ? " is-invalid" : "");
   };
-
+  const toggleShowPassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
   return (
     <div className="mb-4">
       <label htmlFor={name}>{label}</label>
@@ -30,7 +26,7 @@ export default function TextField({ label, type, name, value, onChange, error })
           className={getInputClasses()}
         />
         {type === "password" && (
-          <button onClick={toggleShowPassword} className="btn btn-outline-secondary" type="button">
+          <button className="btn btn-outline-secondary" type="button" onClick={toggleShowPassword}>
             <i className={"bi bi-eye" + (showPassword ? "-slash" : "")}></i>
           </button>
         )}
@@ -38,17 +34,17 @@ export default function TextField({ label, type, name, value, onChange, error })
       </div>
     </div>
   );
-}
-
+};
 TextField.defaultProps = {
   type: "text",
 };
-
 TextField.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
-  error: PropTypes.string,
   onChange: PropTypes.func,
+  error: PropTypes.string,
 };
+
+export default TextField;

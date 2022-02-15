@@ -1,22 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import BookMark from "./Bookmark";
-import Qualities from "./qualities";
-import Table from "../common/table";
 
+import BookMark from "../common/Bookmark";
+import Qualities from "./Qualities";
+import Table from "../common/Table";
 import { Link } from "react-router-dom";
 
-const UserTable = ({
-  users,
-  onSort,
-  selectedSort,
-  onToggleBookMark,
-  onDelete,
-  allUsers,
-  onChangeInput,
-  inputValue,
-  ...rest
-}) => {
+const UserTable = ({ users, onSort, selectedSort, onToggleBookMark, onDelete, ...rest }) => {
   const columns = {
     name: {
       path: "name",
@@ -48,17 +38,7 @@ const UserTable = ({
       ),
     },
   };
-  return (
-    <Table
-      onSort={onSort}
-      selectedSort={selectedSort}
-      onChangeInput={onChangeInput}
-      inputValue={inputValue}
-      columns={columns}
-      data={users}
-      allUsers={allUsers}
-    />
-  );
+  return <Table onSort={onSort} selectedSort={selectedSort} columns={columns} data={users} />;
 };
 
 UserTable.propTypes = {
